@@ -1,40 +1,98 @@
  Algorithme Construire-tas
 BOURABIA DJAMEL  /// LAROUCI BILLAL 
 *********************************************************************
-def Entasser(tableau, taille, index):
-    plus_grand = index
-    gauche = 2 * index + 1
-    droite = 2 * index + 2
+class Tas:
+    def __init__(self, arbre):
+        self.arbre = arbre  # Liste représentant le tableau initial
+        self.n = len(arbre)  # Taille du tableau
 
-    if gauche < taille and tableau[gauche] > tableau[plus_grand]:
-        plus_grand = gauche
-    if droite < taille and tableau[droite] > tableau[plus_grand]:
-        plus_grand = droite
+    # Méthode pour maintenir la propriété de TAS max à partir d'un nœud donné
+    def EntasserMax(self, n, i):
+        MaxIndice = i
+        FG = 2 * i + 1
+        FD = 2 * i + 2
 
-    if plus_grand != index:
-        tableau[index], tableau[plus_grand] = tableau[plus_grand], tableau[index]
-        Entasser(tableau, taille, plus_grand)
+        if FG < n and self.arbre[FG] > self.arbre[MaxIndice]:
+            MaxIndice = FG
 
-def CRIER_tas(tableau):
-    n = len(tableau)
-    for i in range(n // 2 - 1, -1, -1):
-        Entasser(tableau, n, i)
+        if FD < n and self.arbre[FD] > self.arbre[MaxIndice]:
+            MaxIndice = FD
 
-************************************************************
-EXEMPLE 
-**************************************************************
-tableau = [10, 22, 5, 18, 20, 25, 40, 30, 35, 12]
-print("Tableau initial:", tableau)
+        if MaxIndice != i:
+            self.arbre[i], self.arbre[MaxIndice] = self.arbre[MaxIndice], self.arbre[i]
+            self.EntasserMax(n, MaxIndice)
 
-# Construire le TASmax
-CRIER_tas(tableau)
-print("TASmax:", tableau)
+    # Méthode pour maintenir la propriété de TAS min à partir d'un nœud donné
+    def EntasserMin(self, n, i):
+        MinIndice = i
+        FG = 2 * i + 1
+        FD = 2 * i + 2
+
+        if FG < n and self.arbre[FG] < self.arbre[MinIndice]:
+            MinIndice = FG
+
+        if FD < n and self.arbre[FD] < self.arbre[MinIndice]:
+            MinIndice = FD
+
+        if MinIndice != i:
+            self.arbre[i], self.arbre[MinIndice] = self.arbre[MinIndice], self.arbre[i]
+            self.EntasserMin(n, MinIndice)
+
+    # Méthode pour construire un TAS max
+    def ConsTasMax(self):
+        for i in range(self.n // 2 - 1, -1, -1):
+            self.EntasserMax(self.n, i)
+
+    # Méthode pour construire un TAS min
+    def ConsTasMin(self):
+        for i in range(self.n // 2 - 1, -1, -1):
+            self.EntasserMin(self.n, i)
+
+    # Méthode pour effectuer un tri par TAS max (ordre décroissant)
+    def TasMax(self):
+        self.ConsTasMax()  # Construire le TAS max
+        for i in range(self.n - 1, 0, -1):
+            #self.arbre[0], self.arbre[i] = self.arbre[i], self.arbre[0]  # Échanger la racine avec le dernier élément
+            self.EntasserMax(i, 0)  # Rétablir la propriété du TAS max
+        return self.arbre
+
+    # Méthode pour effectuer un tri par TAS min (ordre croissant)
+    def TriParTas(self):
+        self.ConsTasMin()  # Construire le TAS min
+        for i in range(self.n - 1, 0, -1):
+            self.arbre[0], self.arbre[i] = self.arbre[i], self.arbre[0]  # Échanger la racine avec le dernier élément
+            self.EntasserMin(i, 0)  # Rétablir la propriété du TAS min
+        return self.arbre
 
 
-**********************************
-Résultat
-**********************************
+# Exemple d'utilisation
+arbre = [10, 22, 5, 18, 20, 25, 40, 30, 35, 12]
 
-Tableau initial: [10, 22, 5, 18, 20, 25, 40, 30, 35, 12]
-TASmax: [40, 35, 25, 30, 20, 10, 5, 22, 18, 12]
+# Création d'une instance de la classe Tas
+tas = Tas(arbre.copy())
+
+# Tri en ordre décroissant (TAS max)
+print("Arbre initial :", arbre)
+print(" ------------------------------------------------------- \n")
+ResultatMax = tas.TasMax()
+print("Tableau trié en ordre décroissant - TASmax :", ResultatMax)
+print(" ------------------------------------------------------- \n")
+
+# Tri en ordre croissant (TAS min)
+tas = Tas(arbre.copy())  # Réinitialiser l'instance pour un nouveau tri
+ResultatMin = tas.TriParTas()
+print("Tableau trié en ordre croissant - Tri par TAS :", ResultatMin)
+
+**********************************************************************************
+RESULTATS 
+************************************************************************************
+Arbre initial : [10, 22, 5, 18, 20, 25, 40, 30, 35, 12]
+ ------------------------------------------------------- 
+
+Tableau trié en ordre décroissant - TASmax : [40, 35, 25, 30, 20, 10, 5, 22, 18, 12]
+ ------------------------------------------------------- 
+
+Tableau trié en ordre croissant - Tri par TAS : [40, 35, 30, 25, 22, 20, 18, 12, 10, 5]
+
+
 
