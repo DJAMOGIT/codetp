@@ -19,17 +19,7 @@ def CRIER_tas(tableau):
     n = len(tableau)
     for i in range(n // 2 - 1, -1, -1):
         Entasser(tableau, n, i)
-*************************************************************
-TRI TABLEAU
-************************************************************
 
-def tri_par_tas(tableau):
-    n = len(tableau)
-    CRIER_tas(tableau)
-
-    for i in range(n - 1, 0, -1):
-        tableau[0], tableau[i] = tableau[i], tableau[0]
-        Entasser(tableau, i, 0)
 ************************************************************
 EXEMPLE 
 **************************************************************
@@ -40,9 +30,6 @@ print("Tableau initial:", tableau)
 CRIER_tas(tableau)
 print("TASmax:", tableau)
 
-# Trier par TAS
-tri_par_tas(tableau)
-print("Tableau trié:", tableau)
 
 **********************************
 Résultat
@@ -50,4 +37,4 @@ Résultat
 
 Tableau initial: [10, 22, 5, 18, 20, 25, 40, 30, 35, 12]
 TASmax: [40, 35, 25, 30, 20, 10, 5, 22, 18, 12]
-Tableau trié: [5, 10, 12, 18, 20, 22, 25, 30, 35, 40]
+
