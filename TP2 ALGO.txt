@@ -1,5 +1,5 @@
  Algorithme Construire-tas
-
+BOURABIA DJAMEL  /// LAROUCI BILLAL 
 *********************************************************************
 def Entasser(tableau, taille, index):
     plus_grand = index
