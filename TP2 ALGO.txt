@@ -1,0 +1,52 @@
+ Algorithme Construire-tas
+
+*********************************************************************
+def Entasser(tableau, taille, index):
+    plus_grand = index
+    gauche = 2 * index + 1
+    droite = 2 * index + 2
+
+    if gauche < taille and tableau[gauche] > tableau[plus_grand]:
+        plus_grand = gauche
+    if droite < taille and tableau[droite] > tableau[plus_grand]:
+        plus_grand = droite
+
+    if plus_grand != index:
+        tableau[index], tableau[plus_grand] = tableau[plus_grand], tableau[index]
+        Entasser(tableau, taille, plus_grand)
+
+def CRIER_tas(tableau):
+    n = len(tableau)
+    for i in range(n // 2 - 1, -1, -1):
+        Entasser(tableau, n, i)
+*************************************************************
+TRI TABLEAU
+************************************************************
+
+def tri_par_tas(tableau):
+    n = len(tableau)
+    CRIER_tas(tableau)
+
+    for i in range(n - 1, 0, -1):
+        tableau[0], tableau[i] = tableau[i], tableau[0]
+        Entasser(tableau, i, 0)
+************************************************************
+EXEMPLE 
+**************************************************************
+tableau = [10, 22, 5, 18, 20, 25, 40, 30, 35, 12]
+print("Tableau initial:", tableau)
+
+# Construire le TASmax
+CRIER_tas(tableau)
+print("TASmax:", tableau)
+
+# Trier par TAS
+tri_par_tas(tableau)
+print("Tableau trié:", tableau)
+
+**********************************
+Résultat
+**********************************
+
+Tableau initial : [40, 35, 25, 30, 20, 10, 5, 22, 18, 12]
+Tableau trié : [5, 10, 12, 18, 20, 22, 25, 30, 35, 40]
