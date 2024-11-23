@@ -3,8 +3,8 @@ BOURABIA DJAMEL  /// LAROUCI BILLAL
 *********************************************************************
 class Tas:
     def __init__(self, arbre):
-        self.arbre = arbre  # Liste représentant le tableau initial
-        self.n = len(arbre)  # Taille du tableau
+        self.arbre = arbre 
+        self.n = len(arbre) 
 
     # Méthode pour maintenir la propriété de TAS max à partir d'un nœud donné
     def EntasserMax(self, n, i):
